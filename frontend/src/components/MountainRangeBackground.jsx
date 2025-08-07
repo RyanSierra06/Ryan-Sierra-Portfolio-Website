@@ -1,10 +1,9 @@
- import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 
 const MountainRangeBackground = () => {
     const mountRef = useRef(null);
 
-    // Enhanced SimplexNoise for more organic patterns
     class SimplexNoise {
         constructor() {
             this.grad3 = new Float32Array([
@@ -70,7 +69,6 @@ const MountainRangeBackground = () => {
         }
     }
 
-    // Pre-compute terrain with efficient generation
     function generateTerrain(width, height) {
         const noise = new SimplexNoise();
         const data = new Float32Array(width * height);
@@ -80,15 +78,13 @@ const MountainRangeBackground = () => {
                 const nx = x / width - 0.5;
                 const ny = y / height - 0.5;
 
-                // Balanced noise levels for dramatic but not extreme mountains
-                const baseNoise = noise.noise(nx * 3, ny * 3) * 3; // Half of 6
-                const detailNoise = noise.noise(nx * 8, ny * 8) * 1; // Half of 2
-                const fineNoise = noise.noise(nx * 15, ny * 15) * 0.5; // Half of 1
-                const flowPattern = Math.sin(nx * 15) * Math.cos(ny * 12) * 1.5; // Half of 3
-                
-                // Create balanced peaks and valleys
-                const mountainPeaks = Math.max(0, baseNoise - 1) * 4; // Half intensity
-                const valleys = Math.min(0, baseNoise + 0.5) * 2; // Half intensity
+                const baseNoise = noise.noise(nx * 3, ny * 3) * 3;
+                const detailNoise = noise.noise(nx * 8, ny * 8) * 1;
+                const fineNoise = noise.noise(nx * 15, ny * 15) * 0.5;
+                const flowPattern = Math.sin(nx * 15) * Math.cos(ny * 12) * 1.5;
+
+                const mountainPeaks = Math.max(0, baseNoise - 1) * 4;
+                const valleys = Math.min(0, baseNoise + 0.5) * 2;
                 
                 data[y * width + x] = baseNoise + detailNoise + fineNoise + flowPattern + mountainPeaks + valleys;
             }
@@ -99,42 +95,44 @@ const MountainRangeBackground = () => {
     useEffect(() => {
         if (!mountRef.current) return;
 
-        // Optimized renderer with no flickering
         const renderer = new THREE.WebGLRenderer({
             antialias: true,
-            alpha: false, // Disable alpha for better performance
+            alpha: false,
             powerPreference: "high-performance",
             stencil: false,
-            depth: false // Disable depth buffer since we're using wireframe
+            depth: false,
+            preserveDrawingBuffer: false,
+            failIfMajorPerformanceCaveat: false
         });
-        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const initialWidth = Math.max(window.innerWidth, 1920);
+        const initialHeight = Math.max(window.innerHeight, 1080);
+        renderer.setSize(initialWidth, initialHeight);
         renderer.setClearColor(0x000000, 1);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.info.autoReset = false; // Prevent info reset for better performance
+        renderer.info.autoReset = false;
+        renderer.shadowMap.enabled = false;
         mountRef.current.appendChild(renderer.domElement);
 
-        // Scene
         const scene = new THREE.Scene();
 
-        // Static camera - no movement to prevent flickering
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 350; // Further back to see more of the range
-        camera.position.y = 120; // Higher up for better horizon view
-        camera.position.x = 50;
-        camera.lookAt(0, 0, 0); // Look straight ahead at horizon level
+        const camera = new THREE.PerspectiveCamera(75, initialWidth / initialHeight, 0.1, 1000);
+        camera.position.z = 280;
+        camera.position.y = 100;
+        camera.position.x = 40;
+        camera.lookAt(0, 0, 0);
 
-        // Pre-compute terrain layers
+
         const terrainLayers = [];
         const layerCount = 2;
         
         for (let i = 0; i < layerCount; i++) {
-            const terrainWidth = 100 + i * 30;
-            const terrainHeight = 100 + i * 30;
+            const terrainWidth = 80 + i * 25;
+            const terrainHeight = 80 + i * 25;
             
             const heightMap = generateTerrain(terrainWidth, terrainHeight);
             const geometry = new THREE.PlaneGeometry(terrainWidth, terrainHeight, terrainWidth - 1, terrainHeight - 1);
-            
-            // Apply height map once
+
             for (let j = 0; j < geometry.attributes.position.count; j++) {
                 geometry.attributes.position.setZ(j, heightMap[j] || 0);
             }
@@ -143,48 +141,54 @@ const MountainRangeBackground = () => {
             const material = new THREE.MeshBasicMaterial({
                 color: i === 0 ? 0x00ffff : 0x0080ff,
                 wireframe: true,
-                transparent: false, // Disable transparency for better performance
+                transparent: false,
                 depthTest: false,
                 depthWrite: false
             });
             
             const terrain = new THREE.Mesh(geometry, material);
             terrain.position.z = -50 - i * 30;
-            terrain.position.y = -40 - i * 20; // Lower positioning for epic scale
+            terrain.position.y = -40 - i * 20;
             terrain.rotation.x = -Math.PI / 2;
             terrain.rotation.z = Math.PI / 2;
-            terrain.scale.set(40 + i * 10, 40 + i * 10, 40 + i * 10); // Much larger scale
+            terrain.scale.set(30 + i * 8, 30 + i * 8, 30 + i * 8);
             
             terrainLayers.push(terrain);
             scene.add(terrain);
         }
 
-        // Optimized animation loop with no flickering
         let time = 0;
+        let lastFrameTime = 0;
+        const targetFrameTime = 1000 / 60;
         
-        const animate = () => {
+        const animate = (currentTime) => {
+            if (currentTime - lastFrameTime >= targetFrameTime) {
+                time += 0.01;
+                lastFrameTime = currentTime;
+
+                terrainLayers.forEach((terrain, index) => {
+                    terrain.rotation.z += 0.001 + index * 0.0005;
+                    terrain.rotation.y = Math.sin(time * 0.5 + index) * 0.05;
+                });
+
+                renderer.render(scene, camera);
+            }
+            
             requestAnimationFrame(animate);
-            time += 0.01;
-
-            // Simple terrain rotation (no real-time generation)
-            terrainLayers.forEach((terrain, index) => {
-                terrain.rotation.z += 0.001 + index * 0.0005;
-                terrain.rotation.y = Math.sin(time * 0.5 + index) * 0.05; // Reduced movement
-            });
-
-            renderer.render(scene, camera);
         };
-        animate();
+        
+        requestAnimationFrame(animate);
 
-        // Efficient resize handler
         const handleResize = () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
+            const newWidth = Math.max(window.innerWidth, 1920);
+            const newHeight = Math.max(window.innerHeight, 1080);
+            
+            camera.aspect = newWidth / newHeight;
             camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize(newWidth, newHeight);
         };
         window.addEventListener("resize", handleResize);
 
-        // Cleanup
         return () => {
             window.removeEventListener("resize", handleResize);
             if (mountRef.current && renderer.domElement) {
@@ -204,7 +208,9 @@ const MountainRangeBackground = () => {
                 width: "100vw",
                 height: "100vh",
                 zIndex: -1,
-                pointerEvents: "none"
+                pointerEvents: "none",
+                overflow: "hidden",
+                backgroundColor: "#000000"
             }}
         />
     );
