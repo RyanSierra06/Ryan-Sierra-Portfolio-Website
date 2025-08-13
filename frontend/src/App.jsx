@@ -94,7 +94,7 @@ const App = React.memo(() => {
                 "featuring automated Twitch API data collection, interactive dashboards with highlights and top clips, " +
                 "Twitch OAuth authentication, and curated playlists. Aggregates VODs, clips, and analytics into " +
                 "comprehensive daily summaries.",
-            technologies: ["React", "Node.js", "Tailwind CSS", "Twitch API", "MongoDB", "OAuth", "Vercel", "REST API"],
+            technologies: ["React", "Node.js", "Tailwind CSS", "Twitch API", "OAuth", "Vercel", "REST API"],
             icon: "/Twitch Website Images/Twitch Website Icon.png",
             link: "https://twitch-weekly-recap.vercel.app/",
             github: "https://github.com/RyanSierra06/Twitch-Weekly-Recap-Website",
