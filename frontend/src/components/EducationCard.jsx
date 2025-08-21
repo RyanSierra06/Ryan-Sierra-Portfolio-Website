@@ -5,8 +5,8 @@ const EducationCard = () => {
     const [tooltip, setTooltip] = useState({ show: false, text: '', x: 0, y: 0 });
 
     const courseDescriptions = useMemo(() => ({
-        'CS251': 'Computer Architecture',
-        'CS250': 'Data Structures & Algorithms',
+        'CS251': 'Data Structures & Algorithms',
+        'CS250': 'Computer Architecture',
         'CS240': 'Programming in C',
         'CS182': 'Foundations of Computer Science',
         'CS180BLK': 'Programming to Java',
