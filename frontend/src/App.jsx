@@ -9,7 +9,7 @@ import SplitText from "./components/SplitText.jsx";
 import { motion } from "framer-motion";
 import emailjs from '@emailjs/browser';
 import MountainRangeBackground from "./components/MountainRangeBackground.jsx";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from '@vercel/analytics/react'
 
 const App = React.memo(() => {
     const [isSubmitting, setIsSubmitting] = useState(false);
