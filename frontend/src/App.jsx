@@ -9,6 +9,7 @@ import SplitText from "./components/SplitText.jsx";
 import { motion } from "framer-motion";
 import emailjs from '@emailjs/browser';
 import MountainRangeBackground from "./components/MountainRangeBackground.jsx";
+import { Analytics } from "@vercel/analytics/next"
 
 const App = React.memo(() => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -232,6 +233,7 @@ const App = React.memo(() => {
 
     return (
         <div className="relative w-full min-h-screen overflow-hidden">
+            <Analytics />
             <MountainRangeBackground />
             <NavBar />
             <div className="relative w-full min-h-screen flex flex-col items-center justify-center scroll-smooth">
