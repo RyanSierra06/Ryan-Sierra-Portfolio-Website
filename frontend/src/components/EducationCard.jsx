@@ -5,6 +5,8 @@ const EducationCard = () => {
     const [tooltip, setTooltip] = useState({ show: false, text: '', x: 0, y: 0 });
 
     const courseDescriptions = useMemo(() => ({
+        'CS251': 'Computer Architecture',
+        'CS250': 'Data Structures & Algorithms',
         'CS240': 'Programming in C',
         'CS182': 'Foundations of Computer Science',
         'CS180BLK': 'Programming to Java',
@@ -111,6 +113,34 @@ const EducationCard = () => {
                             <p className="text-slate-300 text-sm font-semibold mb-2">Notable Coursework:</p>
                             <div className="flex flex-wrap gap-2">
                                 <motion.span
+                                    className="px-3 py-1 rounded-full text-xs font-mono border border-pink-500/50 text-pink-400 bg-pink-500/10 cursor-pointer"
+                                    whileHover={{
+                                        scale: 1.1,
+                                        rotateZ: 5,
+                                        z: 20,
+                                        boxShadow: "0 10px 25px rgba(236, 72, 153, 0.3)"
+                                    }}
+                                    transition={springTransition}
+                                    onMouseEnter={(e) => handleTooltipShow(courseDescriptions['CS251'], e)}
+                                    onMouseLeave={handleTooltipHide}
+                                >
+                                    CS251
+                                </motion.span>
+                                <motion.span
+                                    className="px-3 py-1 rounded-full text-xs font-mono border border-emerald-500/50 text-emerald-400 bg-emerald-500/10 cursor-pointer"
+                                    whileHover={{
+                                        scale: 1.1,
+                                        rotateZ: 5,
+                                        z: 20,
+                                        boxShadow: "0 10px 25px rgba(16, 185, 129, 0.3)"
+                                    }}
+                                    transition={springTransition}
+                                    onMouseEnter={(e) => handleTooltipShow(courseDescriptions['CS250'], e)}
+                                    onMouseLeave={handleTooltipHide}
+                                >
+                                    CS250
+                                </motion.span>
+                                <motion.span
                                     className="px-3 py-1 rounded-full text-xs font-mono border border-purple-500/50 text-purple-400 bg-purple-500/10 cursor-pointer"
                                     whileHover={{
                                         scale: 1.1,
@@ -153,12 +183,12 @@ const EducationCard = () => {
                                     CS180BLK
                                 </motion.span>
                                 <motion.span
-                                    className="px-3 py-1 rounded-full text-xs font-mono border border-pink-500/50 text-pink-400 bg-pink-500/10 cursor-pointer"
+                                    className="px-3 py-1 rounded-full text-xs font-mono border border-orange-500/50 text-orange-400 bg-orange-500/10 cursor-pointer"
                                     whileHover={{
                                         scale: 1.1,
                                         rotateZ: 5,
                                         z: 20,
-                                        boxShadow: "0 10px 25px rgba(236, 72, 153, 0.3)"
+                                        boxShadow: "0 10px 25px rgba(249, 115, 22, 0.3)"
                                     }}
                                     transition={springTransition}
                                     onMouseEnter={(e) => handleTooltipShow(courseDescriptions['CS193'], e)}

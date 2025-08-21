@@ -92,7 +92,7 @@ const App = React.memo(() => {
             title: "Twitch Weekly Recap Website",
             description: "A full-stack web app delivering personalized recaps of a user’s followed Twitch streamers, " +
                 "featuring automated Twitch API data collection, interactive dashboards with highlights and top clips, " +
-                "Twitch OAuth authentication, and curated playlists. Aggregates VODs, clips, and analytics into " +
+                "Twitch OAuth authentication, and curated playlists. Aggregates VODs, clips, and profile data into " +
                 "comprehensive daily summaries.",
             technologies: ["React", "Node.js", "Tailwind CSS", "Twitch API", "OAuth", "Vercel", "REST API"],
             icon: "/Twitch Website Images/Twitch Website Icon.png",
@@ -105,10 +105,10 @@ const App = React.memo(() => {
             imageFolderPath: "/French Horn Website Images/",
             imageBaseName: "French Horn-Website-",
             title: "French Horn Practice Website",
-            description: "A 33‑day French horn practice platform for orchestral audition prep, featuring daily curated " +
-                "excerpts from Bach, Beethoven, Strauss, etc. Includes integrated sheet music viewer, synchronized " +
+            description: "A 33‑day French horn practice platform for orchestral audition prep and personal practice, featuring daily curated " +
+                "excerpts from Bach, Beethoven, Strauss, etc. Includes integrated sheet music viewer, excerpt " +
                 "audio playback, personalized practice calendar, progress tracking, and favorite management, providing " +
-                "a structured, goal‑driven path for professional audition readiness.",
+                "a structured, goal‑driven path for audition readiness.",
             technologies: ["React", "Node.js", "Tailwind CSS", "MongoDB", "Vite", "Vercel", "REST API"],
             icon: "/French Horn Website Images/French Horn Website Icon.png",
             link: "https://33-days-of-french-horn.vercel.app/",
@@ -140,7 +140,7 @@ const App = React.memo(() => {
                 "community-driven initiatives. Support 700+ first-year students by teaching CS193 (Intro to CS tools), " +
                 "while leading mental health initiatives and expanding access to research by connecting students with " +
                 "faculty projects and promoting early involvement.",
-            role: "CS193 Lead Instructor, Mental Health Initiative Lead, Research Resources Initiative Lead, Member",
+            role: "CS193 Lead Instructor, Mental Health Initiative Lead, Research Resources Initiative, Member",
             members: "20+",
             achievements: "700+",
             membersLabel: "Members",
@@ -168,7 +168,7 @@ const App = React.memo(() => {
             title: "Purdue Bands And Orchestras",
             description: "Principal Horn of the Purdue Wind Ensemble for 3 consecutive semesters, selected to " +
                 "perform at the Kennedy Center and in Spain, awarded the Leath Scholarship " +
-                "(1 of 300 recipients), as well as the David Foertsch Memorial Brass Award. Perform with Boiler Brass, " +
+                "(chosen from over 300 applicants), as well as the David Foertsch Memorial Brass Award. Perform with Boiler Brass, " +
                 "Purdue's elite basketball pep band, earning the \"Outstanding Audition\" award and supporting " +
                 "the team at high-energy home games.",
             role: "Wind Ensemble Principal Horn, Boiler Brass Member",
@@ -185,7 +185,7 @@ const App = React.memo(() => {
     const researchProjects = useMemo(() => [
         {
             title: "GeoML Environmental Prediction Research",
-            description: "During the Fall semester last year I collaborated on a project leveraging NASA's satellite data and GEOS-FP atmospheric " +
+            description: "Collaborated on a project leveraging NASA's satellite data and GEOS-FP atmospheric " +
                 "data to predict global concentrations of pollutants like dust, sea salt, organic carbon, " +
                 "brown carbon, and sulfates, aiming to extend reliable air quality forecasting to underserved " +
                 "and sensor-limited regions. Integrated ground-based monitoring data to refine model accuracy, " +
