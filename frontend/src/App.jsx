@@ -139,9 +139,9 @@ const App = React.memo(() => {
             description: "Selected from a 5% acceptance rate into Purdue's premier Computer Science organization" +
                 ", focused to strengthening student-faculty connections and enhancing the CS student experience through " +
                 "community-driven initiatives. Support 700+ first-year students by teaching CS193 (Intro to CS tools), " +
-                "while leading mental health initiatives and expanding access to research by connecting students with " +
+                "while leading social wellness initiatives and expanding access to research by connecting students with " +
                 "faculty projects and promoting early involvement.",
-            role: "CS193 Lead Instructor, Mental Health Initiative Lead, Research Resources Initiative, Member",
+            role: "CS193 Lead Instructor, Social Wellness Initiative Lead, Research Resources Initiative, Member",
             members: "20+",
             achievements: "700+",
             membersLabel: "Members",
